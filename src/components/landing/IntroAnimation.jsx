@@ -24,13 +24,13 @@ export default function IntroAnimation({ onComplete }) {
     <div 
       className={`fixed inset-0 z-50 bg-black flex items-center justify-center overflow-hidden perspective-1000 ${phase >= 6 ? 'animate-shatter-out' : ''}`}
     >
-      {/* PHASE 1: Matrix Digital Rain */}
+      {/* PHASE 1: Matrix Digital Rain - WHITE */}
       {phase >= 1 && phase < 2 && (
-        <div className="absolute inset-0 overflow-hidden opacity-30">
+        <div className="absolute inset-0 overflow-hidden opacity-20">
           {[...Array(20)].map((_, i) => (
             <div 
               key={i}
-              className="absolute text-primary font-mono text-sm animate-matrix-fall"
+              className="absolute text-white font-mono text-sm animate-matrix-fall"
               style={{ 
                 left: `${i * 5}%`, 
                 animationDelay: `${i * 0.1}s`,
@@ -47,14 +47,14 @@ export default function IntroAnimation({ onComplete }) {
         </div>
       )}
 
-      {/* PHASE 2: Glitch Explosion */}
+      {/* PHASE 2: Glitch Explosion - MONOCHROME */}
       {glitchActive && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-full h-2 bg-primary animate-glitch-1" />
-          <div className="absolute w-full h-2 bg-purple-500 animate-glitch-2" />
-          <div className="absolute w-full h-2 bg-pink-500 animate-glitch-3" />
-          <div className="absolute w-2 h-full bg-primary animate-glitch-4" />
-          <div className="absolute w-2 h-full bg-purple-500 animate-glitch-5" />
+          <div className="absolute w-full h-2 bg-white animate-glitch-1" />
+          <div className="absolute w-full h-2 bg-gray-400 animate-glitch-2" />
+          <div className="absolute w-full h-2 bg-gray-600 animate-glitch-3" />
+          <div className="absolute w-2 h-full bg-white animate-glitch-4" />
+          <div className="absolute w-2 h-full bg-gray-500 animate-glitch-5" />
         </div>
       )}
 
@@ -67,15 +67,15 @@ export default function IntroAnimation({ onComplete }) {
         }`}
         style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Neon Logo Ring */}
+        {/* Logo Ring - MONOCHROME */}
         <div className={`relative w-40 h-40 mx-auto mb-8 transition-all duration-700 ${phase >= 3 ? 'opacity-100' : 'opacity-0'}`}>
-          {/* Pulsing Neon Rings */}
-          <div className="absolute inset-0 rounded-full border-4 border-primary animate-neon-pulse-1" />
-          <div className="absolute inset-2 rounded-full border-4 border-purple-500 animate-neon-pulse-2" />
-          <div className="absolute inset-4 rounded-full border-4 border-pink-500 animate-neon-pulse-3" />
+          {/* Pulsing White Rings */}
+          <div className="absolute inset-0 rounded-full border-4 border-white animate-neon-pulse-1" />
+          <div className="absolute inset-2 rounded-full border-4 border-gray-400 animate-neon-pulse-2" />
+          <div className="absolute inset-4 rounded-full border-4 border-gray-600 animate-neon-pulse-3" />
           
-          {/* Glowing Core */}
-          <div className="absolute inset-6 rounded-full bg-gradient-to-br from-primary via-purple-500 to-pink-500 animate-core-glow shadow-[0_0_60px_rgba(139,92,246,0.8)]">
+          {/* Glowing Core - Black & White */}
+          <div className="absolute inset-6 rounded-full bg-gradient-to-br from-white via-gray-300 to-gray-500 animate-core-glow shadow-[0_0_60px_rgba(255,255,255,0.5)]">
             <img 
               src="/logo.png" 
               alt="MikaCutterLab" 
@@ -83,40 +83,38 @@ export default function IntroAnimation({ onComplete }) {
             />
           </div>
 
-          {/* Orbiting Particles */}
+          {/* Orbiting Particles - WHITE */}
           {phase >= 5 && (
             <>
               <div className="absolute -inset-8 animate-orbit-1">
-                <div className="w-3 h-3 rounded-full bg-primary shadow-[0_0_20px_rgba(139,92,246,1)]" />
+                <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,1)]" />
               </div>
               <div className="absolute -inset-8 animate-orbit-2">
-                <div className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_20px_rgba(168,85,247,1)]" />
+                <div className="w-2 h-2 rounded-full bg-gray-300 shadow-[0_0_20px_rgba(200,200,200,1)]" />
               </div>
               <div className="absolute -inset-8 animate-orbit-3">
-                <div className="w-4 h-4 rounded-full bg-pink-500 shadow-[0_0_20px_rgba(236,72,153,1)]" />
+                <div className="w-4 h-4 rounded-full bg-gray-500 shadow-[0_0_20px_rgba(150,150,150,1)]" />
               </div>
             </>
           )}
         </div>
 
-        {/* Glitch Text */}
+        {/* Text - MONOCHROME */}
         <div className={`relative transition-all duration-700 ${phase >= 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           <h1 className="relative text-5xl sm:text-7xl font-black">
-            {/* Glitch layers */}
-            <span className="absolute -left-1 top-0 text-cyan-400 opacity-70 animate-glitch-cyan">MikaCutterLab</span>
-            <span className="absolute left-1 top-0 text-pink-500 opacity-70 animate-glitch-pink">MikaCutterLab</span>
-            <span className="relative bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent animate-rainbow-glow">
+            {/* Glitch layers - grayscale */}
+            <span className="absolute -left-1 top-0 text-gray-400 opacity-70 animate-glitch-cyan">MikaCutterLab</span>
+            <span className="absolute left-1 top-0 text-gray-600 opacity-70 animate-glitch-pink">MikaCutterLab</span>
+            <span className="relative text-white animate-white-glow">
               MikaCutterLab
             </span>
           </h1>
         </div>
 
-        {/* Cyberpunk Slogan */}
+        {/* Slogan - CLEAN */}
         <div className={`mt-6 transition-all duration-500 ${phase >= 5 ? 'opacity-100' : 'opacity-0'}`}>
-          <p className="text-lg font-mono tracking-[0.3em] uppercase animate-text-flicker">
-            <span className="text-primary">[</span>
-            <span className="text-white"> Create. Cut. Inspire. </span>
-            <span className="text-primary">]</span>
+          <p className="text-lg font-mono tracking-[0.3em] uppercase animate-text-flicker text-gray-300">
+            [ Create. Cut. Inspire. ]
           </p>
         </div>
       </div>
@@ -174,29 +172,29 @@ export default function IntroAnimation({ onComplete }) {
           animation: glitch-5 0.13s ease-in-out infinite;
         }
         @keyframes neon-pulse-1 {
-          0%, 100% { opacity: 0.3; transform: scale(1); box-shadow: 0 0 20px rgba(139, 92, 246, 0.5); }
-          50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
+          0%, 100% { opacity: 0.3; transform: scale(1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
+          50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
         }
         .animate-neon-pulse-1 {
           animation: neon-pulse-1 2s ease-in-out infinite;
         }
         @keyframes neon-pulse-2 {
-          0%, 100% { opacity: 0.3; transform: scale(1); box-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
-          50% { opacity: 1; transform: scale(1.08); box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+          0%, 100% { opacity: 0.3; transform: scale(1); box-shadow: 0 0 20px rgba(200, 200, 200, 0.3); }
+          50% { opacity: 1; transform: scale(1.08); box-shadow: 0 0 40px rgba(200, 200, 200, 0.5); }
         }
         .animate-neon-pulse-2 {
           animation: neon-pulse-2 2s ease-in-out infinite 0.3s;
         }
         @keyframes neon-pulse-3 {
-          0%, 100% { opacity: 0.3; transform: scale(1); box-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
-          50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px rgba(236, 72, 153, 0.8); }
+          0%, 100% { opacity: 0.3; transform: scale(1); box-shadow: 0 0 20px rgba(150, 150, 150, 0.3); }
+          50% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px rgba(150, 150, 150, 0.5); }
         }
         .animate-neon-pulse-3 {
           animation: neon-pulse-3 2s ease-in-out infinite 0.6s;
         }
         @keyframes core-glow {
-          0%, 100% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.6), 0 0 80px rgba(168, 85, 247, 0.4); }
-          50% { box-shadow: 0 0 60px rgba(139, 92, 246, 0.9), 0 0 100px rgba(168, 85, 247, 0.6), 0 0 140px rgba(236, 72, 153, 0.4); }
+          0%, 100% { box-shadow: 0 0 40px rgba(255, 255, 255, 0.4), 0 0 80px rgba(200, 200, 200, 0.2); }
+          50% { box-shadow: 0 0 60px rgba(255, 255, 255, 0.7), 0 0 100px rgba(255, 255, 255, 0.4); }
         }
         .animate-core-glow {
           animation: core-glow 1.5s ease-in-out infinite;
@@ -242,13 +240,12 @@ export default function IntroAnimation({ onComplete }) {
         .animate-glitch-pink {
           animation: glitch-pink 3s infinite 0.1s;
         }
-        @keyframes rainbow-glow {
-          0%, 100% { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.8)); }
-          33% { filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.8)); }
-          66% { filter: drop-shadow(0 0 30px rgba(236, 72, 153, 0.8)); }
+        @keyframes white-glow {
+          0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+          50% { filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.9)); }
         }
-        .animate-rainbow-glow {
-          animation: rainbow-glow 2s ease-in-out infinite;
+        .animate-white-glow {
+          animation: white-glow 2s ease-in-out infinite;
         }
         @keyframes text-flicker {
           0%, 100% { opacity: 1; }
