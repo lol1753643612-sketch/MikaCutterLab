@@ -69,7 +69,13 @@ export default function ContactSection() {
               if (!validate()) return;
               
               try {
-                const response = await fetch('http://localhost:3013/contact', {
+                // API URL - automatisch erkennen: Render oder localhost
+                const isProduction = window.location.hostname !== 'localhost';
+                const API_URL = isProduction 
+                  ? 'https://mikacutterlab-api.onrender.com'  // Render Backend
+                  : 'http://localhost:3013';  // Lokale Entwicklung
+
+                const response = await fetch(`${API_URL}/contact`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

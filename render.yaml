@@ -23,3 +23,5 @@ services:
     envVars:
       - key: VITE_API_URL
         value: https://mikacutterlab-api.onrender.com
+      - key: NODE_VERSION
+        value: 20
