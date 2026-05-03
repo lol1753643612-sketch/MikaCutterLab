@@ -73,7 +73,7 @@ export default function ContactSection() {
               
               // AbortController für Timeout
               const controller = new AbortController();
-              const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 Sekunden Timeout
+              const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 Sekunden Timeout (Render braucht lange zum Aufwachen)
               
               try {
                 // API URL - automatisch erkennen: Render oder localhost
