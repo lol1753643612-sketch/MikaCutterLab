@@ -1,0 +1,47 @@
+{
+  "name": "ContactRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name des Anfragenden"
+    },
+    "email": {
+      "type": "string",
+      "description": "E-Mail des Anfragenden"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Telefonnummer (optional)"
+    },
+    "service": {
+      "type": "string",
+      "enum": [
+        "video_editing",
+        "social_media",
+        "content_creation",
+        "other"
+      ],
+      "description": "Gewünschter Service"
+    },
+    "message": {
+      "type": "string",
+      "description": "Nachricht"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "in_progress",
+        "done"
+      ],
+      "default": "new",
+      "description": "Bearbeitungsstatus"
+    }
+  },
+  "required": [
+    "name",
+    "email",
+    "message"
+  ]
+}
