@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const path = require('path');
 require('dotenv').config();
 
@@ -15,18 +15,20 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Gmail SMTP Transporter
-const emailUser = process.env.GMAIL_USER || 'mikastratmann22@gmail.com';
-const emailPass = process.env.GMAIL_APP_PASS;
+// SendGrid Setup
+const sendgridApiKey = process.env.SENDGRID_API_KEY;
+const fromEmail = process.env.FROM_EMAIL || 'noreply@mika-stratmann.de';
 const toEmail = process.env.TO_EMAIL || 'mika@mika-stratmann.de';
 
-console.log('Gmail User:', emailUser);
-console.log('Gmail Pass vorhanden:', !!emailPass);
-console.log('Empfänger:', toEmail);
+console.log('SendGrid API Key vorhanden:', !!sendgridApiKey);
+console.log('From Email:', fromEmail);
+console.log('To Email:', toEmail);
 
-if (!emailPass) {
-  console.error('FEHLER: GMAIL_APP_PASS ist nicht gesetzt!');
-  console.error('Bitte App-Passwort in .env eintragen.');
+if (sendgridApiKey) {
+  sgMail.setApiKey(sendgridApiKey);
+  console.log('✅ SendGrid initialisiert');
+} else {
+  console.error('⚠️ SENDGRID_API_KEY nicht gesetzt - E-Mails werden nicht funktionieren!');
 }
 
 const transporter = nodemailer.createTransport({
@@ -62,9 +64,9 @@ app.post('/contact', async (req, res) => {
       });
     }
 
-    // Prüfen ob E-Mail Config vorhanden
-    if (!emailPass) {
-      console.error('ERROR: GMAIL_APP_PASS nicht gesetzt!');
+    // Prüfen ob SendGrid Config vorhanden
+    if (!sendgridApiKey) {
+      console.error('ERROR: SENDGRID_API_KEY nicht gesetzt!');
       return res.status(500).json({
         success: false,
         error: 'E-Mail Konfiguration fehlt. Bitte Admin kontaktieren.'
@@ -202,7 +204,7 @@ app.post('/contact', async (req, res) => {
     `;
 
     const mailOptions = {
-      from: `"MikaCutterLab Website" <${emailUser}>`,
+      from: `"MikaCutterLab Website" <${fromEmail}>`,
       to: toEmail,
       replyTo: email,
       subject: `📧 Neue Anfrage von ${name}`,
@@ -210,7 +212,8 @@ app.post('/contact', async (req, res) => {
       text: `Neue Kontaktanfrage von ${name}\n\nE-Mail: ${email}\nTelefon: ${phone || 'Nicht angegeben'}\nService: ${service || 'Nicht angegeben'}\n\nNachricht:\n${message}\n\nEingegangen: ${new Date().toLocaleString('de-DE')}`
     };
 
-    await transporter.sendMail(mailOptions);
+    // SendGrid senden
+    await sgMail.send(mailOptions);
     console.log('✅ Benachrichtigung gesendet an:', toEmail);
 
     // PROFESSIONELLE BESTÄTIGUNGS-E-MAIL AN ABSENDER
@@ -338,14 +341,14 @@ app.post('/contact', async (req, res) => {
     `;
 
     const autoReplyOptions = {
-      from: `"Mika - MikaCutterLab" <${emailUser}>`,
+      from: `"Mika - MikaCutterLab" <${fromEmail}>`,
       to: email,
       subject: `Vielen Dank für deine Anfrage, ${name}`,
       html: confirmationHtml,
       text: `Hallo ${name},\n\nvielen Dank für deine Anfrage bei MikaCutterLab!\n\nIch habe deine Nachricht erhalten und werde mich in Kürze bei dir melden. In der Regel antworte ich innerhalb von 24 Stunden.\n\nDein Projekt ist mir wichtig und ich freue mich darauf, gemeinsam mit dir etwas Grossartiges zu erschaffen.\n\nWas passiert als Nächstes?\n1. Ich prüfe deine Anfrage persönlich\n2. Ich melde mich per E-Mail oder Telefon bei dir\n3. Wir besprechen alle Details, Zeitplan und Budget\n\nBei dringenden Angelegenheiten erreichst du mich unter: mika@mika-stratmann.de\n\nBis bald,\nMika\nMikaCutterLab - Create. Cut. Inspire.`
     };
 
-    await transporter.sendMail(autoReplyOptions);
+    await sgMail.send(autoReplyOptions);
     console.log('Bestätigungs-E-Mail gesendet an:', email);
 
     res.status(200).json({
