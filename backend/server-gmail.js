@@ -46,8 +46,12 @@ const transporter = nodemailer.createTransport({
 
 // Kontaktformular Endpoint
 app.post('/contact', async (req, res) => {
+  // Variablen vor try-block definieren (für catch-block verfügbar)
+  let name, email, phone, service, message;
+  
   try {
-    const { name, email, phone, service, message } = req.body;
+    // Daten extrahieren
+    ({ name, email, phone, service, message } = req.body);
 
     // Validierung
     if (!name || !email || !message) {
