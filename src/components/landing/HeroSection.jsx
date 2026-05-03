@@ -53,18 +53,21 @@ export default function HeroSection() {
           <a
             href='#portfolio'
             onClick={(e) => handleScroll(e, '#portfolio')}
-            className='group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-semibold transition-all hover:scale-110 hover:shadow-2xl hover:shadow-white/40'
+            className='group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white font-bold text-lg tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] active:scale-95 overflow-hidden'
           >
-            <Play className="w-5 h-5 group-hover:animate-bounce" />
-            Projekte ansehen
+            <span className="absolute inset-0 bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <Play className="w-6 h-6 relative z-10 text-black group-hover:scale-110 transition-transform duration-300" />
+            <span className="relative z-10 text-black">Projekte ansehen</span>
+            <span className="absolute inset-0 rounded-full ring-2 ring-white/50 group-hover:ring-white animate-pulse"></span>
           </a>
           <a
             href='#contact'
             onClick={(e) => handleScroll(e, '#contact')}
-            className='group inline-flex items-center gap-2 px-8 py-4 rounded-full bg-card border border-border text-foreground font-semibold hover:bg-card/80 transition-all hover:scale-110 hover:border-primary/50'
+            className='group relative inline-flex items-center gap-3 px-10 py-5 rounded-full bg-transparent border-2 border-white/30 font-bold text-lg tracking-wide text-white transition-all duration-300 hover:scale-105 hover:bg-white/10 hover:border-white/60 active:scale-95 overflow-hidden'
           >
-            Projekt anfragen
-            <span className="group-hover:translate-x-1 transition-transform">-</span>
+            <span className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span className="relative z-10">Projekt anfragen</span>
+            <span className="relative z-10 group-hover:translate-x-2 transition-transform duration-300">→</span>
           </a>
         </div>
       </div>
