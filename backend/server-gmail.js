@@ -408,12 +408,53 @@ app.post('/contact', async (req, res) => {
   }
 });
 
+// API Route: Gespeicherte Anfragen abrufen (mit einfachem Passwort-Schutz)
+app.get('/admin/requests', (req, res) => {
+  const adminPass = req.query.pass;
+  if (adminPass !== 'mika2024') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const filePath = path.join(__dirname, 'data', 'contact-requests.json');
+    
+    if (!fs.existsSync(filePath)) {
+      return res.json({ requests: [], count: 0 });
+    }
+    
+    const content = fs.readFileSync(filePath, 'utf8');
+    const requests = JSON.parse(content);
+    
+    res.json({ 
+      requests: requests.reverse(), // Neueste zuerst
+      count: requests.length 
+    });
+  } catch (error) {
+    console.error('Fehler beim Lesen:', error);
+    res.status(500).json({ error: 'Fehler beim Lesen der Datei' });
+  }
+});
+
+// Static files: data Ordner auch verfügbar machen
+app.use('/data', express.static(path.join(__dirname, 'data')));
+
 // Health Check
 app.get('/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    env: {
+      gmailUser: !!emailUser,
+      gmailPass: !!emailPass,
+      toEmail: !!toEmail
+    }
+  });
 });
 
 app.listen(PORT, () => {
   console.log(`Server läuft auf Port ${PORT}`);
   console.log(`API verfügbar unter: http://localhost:${PORT}`);
+  console.log(`Admin Panel: http://localhost:${PORT}/admin/requests?pass=mika2024`);
 });
