@@ -71,6 +71,10 @@ export default function ContactSection() {
               
               setLoading(true);
               
+              // AbortController für Timeout
+              const controller = new AbortController();
+              const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 Sekunden Timeout
+              
               try {
                 // API URL - automatisch erkennen: Render oder localhost
                 const isProduction = window.location.hostname !== 'localhost';
@@ -78,24 +82,40 @@ export default function ContactSection() {
                   ? 'https://mikacutterlab-api.onrender.com'  // Render Backend
                   : 'http://localhost:3013';  // Lokale Entwicklung
 
+                console.log('Sende Anfrage an:', `${API_URL}/contact`);
+                
                 const response = await fetch(`${API_URL}/contact`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
                   },
-                  body: JSON.stringify(form)
+                  body: JSON.stringify(form),
+                  signal: controller.signal
                 });
                 
-                const data = await response.json();
+                clearTimeout(timeoutId);
                 
-                if (data.success) {
+                console.log('Response Status:', response.status);
+                
+                const data = await response.json();
+                console.log('Response Data:', data);
+                
+                if (response.ok && data.success) {
                   setSubmitted(true);
                 } else {
-                  alert(data.error || 'Es gab ein Problem beim Senden.');
+                  alert(data.error || `Fehler ${response.status}: ${response.statusText}`);
                 }
               } catch (error) {
-                console.error('Error:', error);
-                alert('Es gab ein Problem beim Senden. Bitte versuche es erneut.');
+                clearTimeout(timeoutId);
+                console.error('Fetch Error:', error);
+                
+                if (error.name === 'AbortError') {
+                  alert('Zeitüberschreitung! Der Server antwortet nicht. Bitte später erneut versuchen.');
+                } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                  alert('Netzwerkfehler! Bitte prüfe deine Internetverbindung oder versuche es später erneut.');
+                } else {
+                  alert(`Fehler: ${error.message}`);
+                }
               } finally {
                 setLoading(false);
               }
