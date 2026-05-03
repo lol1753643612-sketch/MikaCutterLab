@@ -7,28 +7,28 @@ const timeline = [
     title: 'Die ersten Schritte',
     description: 'Live on RP – meine Anfänge in der Videoproduktion. Jeder Fehler war eine Lektion, jedes Video ein Schritt nach vorne.',
     icon: Camera,
-    color: 'from-blue-500 to-cyan-500'
+    color: 'from-gray-400 to-gray-200'
   },
   {
     year: '2024',
     title: 'Skills aufgebaut',
     description: 'Vertieft in Editing, Color Grading & Motion Design. Die Grundlagen wurden zur Passion.',
     icon: Sparkles,
-    color: 'from-purple-500 to-pink-500'
+    color: 'from-gray-500 to-gray-300'
   },
   {
     year: '2025',
     title: 'PizzaLand RP – Der Durchbruch',
     description: 'Fievm Team, Zusammenarbeit mit Filside, viel gelernt. Am 5.5.2025 Start bei PizzaLand RP Minecraft – direkt rein mit daily uploads. Social Media Team aufgebaut, Creator & Leitung geworden.',
     icon: Zap,
-    color: 'from-orange-500 to-red-500'
+    color: 'from-gray-600 to-gray-400'
   },
   {
     year: 'Heute',
     title: 'MikaCutterLab',
     description: 'Neue Aufgaben gesucht, MikaCutterLab geboren. Bereit für dein Projekt – egal welches Format, egal welche Plattform.',
     icon: Crown,
-    color: 'from-primary to-purple-600'
+    color: 'from-white to-gray-400'
   }
 ];
 
@@ -63,18 +63,18 @@ export default function VitaSection() {
     >
       {/* Animated Background */}
       <div className='absolute inset-0'>
-        <div className='absolute top-1/4 left-0 w-[60%] h-[60%] rounded-full bg-primary/5 blur-[150px] animate-pulse' />
-        <div className='absolute bottom-1/4 right-0 w-[50%] h-[50%] rounded-full bg-purple-500/5 blur-[120px] animate-pulse delay-1000' />
+        <div className='absolute top-1/4 left-0 w-[60%] h-[60%] rounded-full bg-white/5 blur-[150px] animate-pulse' />
+        <div className='absolute bottom-1/4 right-0 w-[50%] h-[50%] rounded-full bg-gray-500/5 blur-[120px] animate-pulse delay-1000' />
       </div>
 
       <div className='relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8'>
         {/* Animated Header */}
         <div className={`text-center mb-20 transition-all duration-1000 ${sectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 animate-pulse-glow'>
+          <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6'>
             <span className='text-sm font-medium text-primary'>Meine Reise</span>
           </div>
           <h2 className='text-4xl sm:text-5xl font-bold text-foreground mb-4'>
-            Werdegang & <span className='bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>Erfahrung</span>
+            Werdegang & <span className='text-white'>Erfahrung</span>
           </h2>
           <p className='text-muted-foreground max-w-xl mx-auto text-lg'>
             Von den ersten schüchternen Versuchen bis zur eigenen Marke – jeder Schritt zählt.
@@ -84,8 +84,8 @@ export default function VitaSection() {
         {/* Timeline */}
         <div className='relative'>
           {/* Center Line with Animation */}
-          <div className='absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-primary md:-translate-x-1/2 rounded-full'>
-            <div className='absolute inset-0 bg-gradient-to-b from-blue-500 via-purple-500 to-primary animate-shimmer rounded-full' />
+          <div className='absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-gray-500 via-gray-300 to-white md:-translate-x-1/2 rounded-full'>
+            <div className='absolute inset-0 bg-gradient-to-b from-gray-500 via-gray-300 to-white animate-shimmer rounded-full' />
           </div>
 
           <div className='space-y-16'>
@@ -104,7 +104,7 @@ export default function VitaSection() {
                     {isEven && (
                       <div className='text-right'>
                         <div className='inline-flex items-center gap-3 mb-3'>
-                          <span className='text-3xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>
+                          <span className='text-3xl font-bold text-white'>
                             {item.year}
                           </span>
                         </div>
@@ -131,7 +131,7 @@ export default function VitaSection() {
                     {!isEven && (
                       <div>
                         <div className='inline-flex items-center gap-3 mb-3'>
-                          <span className='text-3xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>
+                          <span className='text-3xl font-bold text-white'>
                             {item.year}
                           </span>
                         </div>
@@ -147,7 +147,7 @@ export default function VitaSection() {
                     {/* Mobile Layout */}
                     {isEven && (
                       <div className='md:hidden'>
-                        <span className='text-2xl font-bold text-primary'>{item.year}</span>
+                        <span className='text-2xl font-bold text-white'>{item.year}</span>
                         <h3 className='text-xl font-bold text-foreground mb-2 mt-1'>{item.title}</h3>
                         <p className='text-muted-foreground'>{item.description}</p>
                       </div>

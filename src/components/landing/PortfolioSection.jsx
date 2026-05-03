@@ -16,14 +16,14 @@ export default function PortfolioSection() {
     <section id='portfolio' className='relative py-24 overflow-hidden'>
       {/* Animated background */}
       <div className='absolute inset-0'>
-        <div className='absolute top-0 left-1/4 w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px] animate-pulse' />
-        <div className='absolute bottom-0 right-1/4 w-[40%] h-[40%] rounded-full bg-purple-500/5 blur-[100px] animate-pulse delay-1000' />
+        <div className='absolute top-0 left-1/4 w-[50%] h-[50%] rounded-full bg-white/5 blur-[120px] animate-pulse' />
+        <div className='absolute bottom-0 right-1/4 w-[40%] h-[40%] rounded-full bg-gray-500/5 blur-[100px] animate-pulse delay-1000' />
       </div>
 
       <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='text-center mb-16'>
           <h2 className='text-3xl sm:text-4xl font-bold text-foreground mb-4 animate-fade-in-up'>
-            Meine <span className='text-primary'>Videos</span>
+            Meine <span className='text-white'>Videos</span>
           </h2>
           <p className='text-muted-foreground max-w-xl mx-auto animate-fade-in-up delay-100'>
             Short Beispiele – direkt hier abspielbar
@@ -45,7 +45,7 @@ export default function PortfolioSection() {
             />
           </div>
           <div className='mt-4 flex items-center gap-2 text-muted-foreground'>
-            <svg className='w-5 h-5 text-red-500' viewBox='0 0 24 24' fill='currentColor'>
+            <svg className='w-5 h-5 text-white' viewBox='0 0 24 24' fill='currentColor'>
               <path d='M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'/>
             </svg>
             <span className='text-sm'>Langes Video – Full Project</span>
@@ -57,7 +57,7 @@ export default function PortfolioSection() {
           {shortVideos.map((video, idx) => (
             <div
               key={idx}
-              className='relative aspect-[9/16] rounded-xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/10 animate-fade-in-up'
+              className='relative aspect-[9/16] rounded-xl overflow-hidden border border-border bg-card hover:border-white/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-white/10 animate-fade-in-up'
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               <iframe
@@ -77,7 +77,7 @@ export default function PortfolioSection() {
             href='https://www.tiktok.com/@pizzalandrp'
             target='_blank'
             rel='noopener noreferrer'
-            className='inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors'
+            className='inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors'
           >
             <span>Alle Videos auf TikTok</span>
             <ExternalLink className='w-4 h-4' />

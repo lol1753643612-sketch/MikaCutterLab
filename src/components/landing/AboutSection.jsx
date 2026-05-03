@@ -9,8 +9,8 @@ export default function AboutSection() {
             <div className='relative w-full max-w-md aspect-square rounded-2xl overflow-hidden border border-border bg-card shadow-2xl shadow-primary/5 flex items-center justify-center p-12'>
               <img src='/logo.png' alt='MikaCutterLab' className='w-full h-full object-contain' />
             </div>
-            <div className='absolute -bottom-6 -right-6 w-40 h-40 bg-primary/10 rounded-full blur-3xl' />
-            <div className='absolute -top-6 -left-6 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl' />
+            <div className='absolute -bottom-6 -right-6 w-40 h-40 bg-white/10 rounded-full blur-3xl' />
+            <div className='absolute -top-6 -left-6 w-40 h-40 bg-gray-500/10 rounded-full blur-3xl' />
           </div>
 
           <div className='space-y-6'>
