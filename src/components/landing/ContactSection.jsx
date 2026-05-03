@@ -69,7 +69,7 @@ export default function ContactSection() {
               if (!validate()) return;
               
               try {
-                const response = await fetch('http://localhost:3012/contact', {
+                const response = await fetch('http://localhost:3013/contact', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

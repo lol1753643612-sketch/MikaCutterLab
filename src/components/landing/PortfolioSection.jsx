@@ -1,52 +1,87 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 
-const projects = [
-  { title: 'PizzaLand RP – TikTok 1', category: 'Social Media', url: 'https://www.tiktok.com/@pizzalandrp/video/7634802476188847392' },
-  { title: 'PizzaLand RP – TikTok 2', category: 'Social Media', url: 'https://www.tiktok.com/@pizzalandrp/video/7626669937695739158' },
-  { title: 'PizzaLand RP – TikTok 3', category: 'Social Media', url: 'https://www.tiktok.com/@pizzalandrp/video/7622225556448267542' },
-  { title: 'PizzaLand RP – TikTok 4', category: 'Social Media', url: 'https://www.tiktok.com/@pizzalandrp/video/7601977657655348483' },
-  { title: 'PizzaLand RP – TikTok 5', category: 'Social Media', url: 'https://www.tiktok.com/@pizzalandrp/video/7627404531659312406' },
-  { title: 'PizzaLand RP – TikTok 6', category: 'Social Media', url: 'https://www.tiktok.com/@pizzalandrp/video/7624436726198488342' }
+// TikTok Video IDs
+const shortVideos = [
+  { id: '7634802476188847392', username: 'pizzalandrp' },
+  { id: '7626669937695739158', username: 'pizzalandrp' },
+  { id: '7622225556448267542', username: 'pizzalandrp' },
+  { id: '7601977657655348483', username: 'pizzalandrp' },
+  { id: '7627404531659312406', username: 'pizzalandrp' },
+  { id: '7624436726198488342', username: 'pizzalandrp' }
 ];
 
 export default function PortfolioSection() {
   return (
-    <section id='portfolio' className='relative py-24'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+    <section id='portfolio' className='relative py-24 overflow-hidden'>
+      {/* Animated background */}
+      <div className='absolute inset-0'>
+        <div className='absolute top-0 left-1/4 w-[50%] h-[50%] rounded-full bg-primary/5 blur-[120px] animate-pulse' />
+        <div className='absolute bottom-0 right-1/4 w-[40%] h-[40%] rounded-full bg-purple-500/5 blur-[100px] animate-pulse delay-1000' />
+      </div>
+
+      <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='text-center mb-16'>
-          <h2 className='text-3xl sm:text-4xl font-bold text-foreground mb-4'>
-            Ausgewählte <span className='text-primary'>Projekte</span>
+          <h2 className='text-3xl sm:text-4xl font-bold text-foreground mb-4 animate-fade-in-up'>
+            Meine <span className='text-primary'>Videos</span>
           </h2>
-          <p className='text-muted-foreground max-w-xl mx-auto'>
-            Ein Einblick in abgeschlossene Arbeiten – jedes Projekt ist einzigartig und maßgeschneidert.
+          <p className='text-muted-foreground max-w-xl mx-auto animate-fade-in-up delay-100'>
+            Short Beispiele – direkt hier abspielbar
           </p>
         </div>
 
+        {/* Long YouTube Video */}
+        <div className='mb-12 animate-fade-in-up'>
+          <div className='aspect-video rounded-xl overflow-hidden border border-border bg-card'>
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/CAa-oCDTd_0"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+          <div className='mt-4 flex items-center gap-2 text-muted-foreground'>
+            <svg className='w-5 h-5 text-red-500' viewBox='0 0 24 24' fill='currentColor'>
+              <path d='M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'/>
+            </svg>
+            <span className='text-sm'>Langes Video – Full Project</span>
+          </div>
+        </div>
+
+        {/* Short TikTok Videos Grid */}
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {projects.map((project, idx) => (
-            <a
+          {shortVideos.map((video, idx) => (
+            <div
               key={idx}
-              href={project.url}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='group relative aspect-[9/16] rounded-xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300'
+              className='relative aspect-[9/16] rounded-xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/10 animate-fade-in-up'
+              style={{ animationDelay: `${idx * 100}ms` }}
             >
-              <div className='w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-muted to-card p-6'>
-                <div className='w-20 h-20 mb-4 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors'>
-                  <svg className='w-10 h-10 text-primary' viewBox='0 0 24 24' fill='currentColor'>
-                    <path d='M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.88-2.89 2.89 2.89 0 012.88-2.88c.24 0 .47.04.69.1V9.15a6.35 6.35 0 00-.69-.04A6.22 6.22 0 005.1 15.33a6.22 6.22 0 006.22 6.22 6.22 6.22 0 006.22-6.22V9.49a8.41 8.41 0 004.9 1.58V7.74c-.24 0-.47-.04-.69-.05z' />
-                  </svg>
-                </div>
-                <p className='text-sm font-medium text-foreground mb-1'>{project.title}</p>
-                <p className='text-xs text-muted-foreground mb-3'>{project.category}</p>
-                <span className='inline-flex items-center gap-1 text-xs text-primary'>
-                  Auf TikTok ansehen
-                  <ExternalLink className='w-3 h-3' />
-                </span>
-              </div>
-            </a>
+              <iframe
+                src={`https://www.tiktok.com/embed/${video.id}`}
+                className='w-full h-full'
+                allowFullScreen
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                scrolling='no'
+              />
+            </div>
           ))}
+        </div>
+
+        {/* TikTok Link */}
+        <div className='mt-12 text-center'>
+          <a
+            href='https://www.tiktok.com/@pizzalandrp'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors'
+          >
+            <span>Alle Videos auf TikTok</span>
+            <ExternalLink className='w-4 h-4' />
+          </a>
         </div>
       </div>
     </section>

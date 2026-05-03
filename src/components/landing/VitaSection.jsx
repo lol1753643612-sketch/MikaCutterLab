@@ -1,60 +1,161 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Camera, Sparkles, Zap, Crown } from 'lucide-react';
 
 const timeline = [
   {
     year: '2023',
-    title: 'Start in die Videoproduktion',
-    description: 'Anfang bei Live on RP – erst schlechte Videos, aber mir viel beigebracht.'
+    title: 'Die ersten Schritte',
+    description: 'Live on RP – meine Anfänge in der Videoproduktion. Jeder Fehler war eine Lektion, jedes Video ein Schritt nach vorne.',
+    icon: Camera,
+    color: 'from-blue-500 to-cyan-500'
   },
   {
     year: '2024',
-    title: 'Vertiefung',
-    description: 'Angefangen mich mit der Thematik mehr zu beschäftigen und Fähigkeiten aufzubauen.'
+    title: 'Skills aufgebaut',
+    description: 'Vertieft in Editing, Color Grading & Motion Design. Die Grundlagen wurden zur Passion.',
+    icon: Sparkles,
+    color: 'from-purple-500 to-pink-500'
   },
   {
     year: '2025',
-    title: 'PizzaLand RP',
-    description: 'Fünf Videos zu schneiden und zu uploaden. Am 5.5.2025 Start bei PizzaLand RP Minecraft, direkt bekommen mit daily uploads bis heute. Mein eigenes Social Media Team aufgebaut und Creator sowie Social Media Leitung geworden.'
+    title: 'PizzaLand RP – Der Durchbruch',
+    description: 'Fievm Team, Zusammenarbeit mit Filside, viel gelernt. Am 5.5.2025 Start bei PizzaLand RP Minecraft – direkt rein mit daily uploads. Social Media Team aufgebaut, Creator & Leitung geworden.',
+    icon: Zap,
+    color: 'from-orange-500 to-red-500'
   },
   {
     year: 'Heute',
     title: 'MikaCutterLab',
-    description: 'Suche nach neuen Aufgaben und dadurch die Gründung von MikaCutterLab. Offen für Video-Projekte aller Art.'
+    description: 'Neue Aufgaben gesucht, MikaCutterLab geboren. Bereit für dein Projekt – egal welches Format, egal welche Plattform.',
+    icon: Crown,
+    color: 'from-primary to-purple-600'
   }
 ];
 
+// Animation Hook
+const useInView = (options = {}) => {
+  const ref = useRef(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsInView(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.2, ...options });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return [ref, isInView];
+};
+
 export default function VitaSection() {
+  const [sectionRef, sectionInView] = useInView();
+
   return (
-    <section id='vita' className='relative py-24'>
-      <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='text-center mb-16'>
-          <h2 className='text-3xl sm:text-4xl font-bold text-foreground mb-4'>
-            Werdegang & <span className='text-primary'>Erfahrung</span>
+    <section 
+      id='vita' 
+      ref={sectionRef}
+      className='relative py-24 overflow-hidden'
+    >
+      {/* Animated Background */}
+      <div className='absolute inset-0'>
+        <div className='absolute top-1/4 left-0 w-[60%] h-[60%] rounded-full bg-primary/5 blur-[150px] animate-pulse' />
+        <div className='absolute bottom-1/4 right-0 w-[50%] h-[50%] rounded-full bg-purple-500/5 blur-[120px] animate-pulse delay-1000' />
+      </div>
+
+      <div className='relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8'>
+        {/* Animated Header */}
+        <div className={`text-center mb-20 transition-all duration-1000 ${sectionInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 animate-pulse-glow'>
+            <span className='text-sm font-medium text-primary'>Meine Reise</span>
+          </div>
+          <h2 className='text-4xl sm:text-5xl font-bold text-foreground mb-4'>
+            Werdegang & <span className='bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>Erfahrung</span>
           </h2>
-          <p className='text-muted-foreground max-w-xl mx-auto'>
-            Mein Weg in die Welt der Videoproduktion – von ersten Experimenten bis zur eigenen Marke.
+          <p className='text-muted-foreground max-w-xl mx-auto text-lg'>
+            Von den ersten schüchternen Versuchen bis zur eigenen Marke – jeder Schritt zählt.
           </p>
         </div>
 
+        {/* Timeline */}
         <div className='relative'>
-          <div className='absolute left-8 top-0 bottom-0 w-px bg-border md:left-1/2 md:-translate-x-px' />
+          {/* Center Line with Animation */}
+          <div className='absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-primary md:-translate-x-1/2 rounded-full'>
+            <div className='absolute inset-0 bg-gradient-to-b from-blue-500 via-purple-500 to-primary animate-shimmer rounded-full' />
+          </div>
 
-          <div className='space-y-12'>
-            {timeline.map((item, index) => (
-              <div key={item.year + item.title} className={'relative flex items-start gap-8 md:gap-0 ' + (index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse')}>
-                <div className='hidden md:block md:w-1/2' />
+          <div className='space-y-16'>
+            {timeline.map((item, index) => {
+              const [itemRef, itemInView] = useInView();
+              const Icon = item.icon;
+              const isEven = index % 2 === 0;
 
-                <div className='absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-primary border-4 border-background -translate-x-1/2 mt-1.5 z-10' />
-
-                <div className={'pl-20 md:pl-0 md:w-1/2 ' + (index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12')}>
-                  <div className={index % 2 === 0 ? 'md:text-right' : ''}>
-                    <span className='text-sm font-bold text-primary'>{item.year}</span>
+              return (
+                <div 
+                  key={item.year + item.title} 
+                  ref={itemRef}
+                  className={`relative flex items-start gap-8 md:gap-0 transition-all duration-700 delay-${index * 100} ${itemInView ? 'opacity-100 translate-x-0' : isEven ? 'opacity-0 -translate-x-10' : 'opacity-0 translate-x-10'}`}
+                >
+                  <div className={`hidden md:block md:w-1/2 ${isEven ? 'md:pr-12' : 'md:pl-12'}`}>
+                    {isEven && (
+                      <div className='text-right'>
+                        <div className='inline-flex items-center gap-3 mb-3'>
+                          <span className='text-3xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>
+                            {item.year}
+                          </span>
+                        </div>
+                        <h3 className='text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors'>
+                          {item.title}
+                        </h3>
+                        <p className='text-muted-foreground leading-relaxed'>
+                          {item.description}
+                        </p>
+                      </div>
+                    )}
                   </div>
-                  <h3 className='text-lg font-semibold text-foreground mb-1'>{item.title}</h3>
-                  <p className='text-sm text-muted-foreground'>{item.description}</p>
+
+                  {/* Center Icon */}
+                  <div className='absolute left-8 md:left-1/2 -translate-x-1/2 z-20'>
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} p-0.5 transform hover:scale-110 transition-transform duration-300 cursor-pointer group`}>
+                      <div className='w-full h-full rounded-2xl bg-background flex items-center justify-center group-hover:bg-transparent transition-colors'>
+                        <Icon className='w-6 h-6 text-white group-hover:text-white transition-colors' />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`pl-20 md:pl-0 md:w-1/2 ${!isEven ? 'md:pl-12' : 'md:pr-12'}`}>
+                    {!isEven && (
+                      <div>
+                        <div className='inline-flex items-center gap-3 mb-3'>
+                          <span className='text-3xl font-bold bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent'>
+                            {item.year}
+                          </span>
+                        </div>
+                        <h3 className='text-2xl font-bold text-foreground mb-3'>
+                          {item.title}
+                        </h3>
+                        <p className='text-muted-foreground leading-relaxed'>
+                          {item.description}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {/* Mobile Layout */}
+                    {isEven && (
+                      <div className='md:hidden'>
+                        <span className='text-2xl font-bold text-primary'>{item.year}</span>
+                        <h3 className='text-xl font-bold text-foreground mb-2 mt-1'>{item.title}</h3>
+                        <p className='text-muted-foreground'>{item.description}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
