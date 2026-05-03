@@ -349,28 +349,58 @@ app.post('/contact', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('❌ Fehler beim Senden:', error);
+    console.error('❌ E-Mail Fehler:', error.message);
     
-    // Spezifische Fehlermeldungen für verschiedene Error Types
-    let errorMessage = 'Fehler beim Senden der E-Mail.';
-    let statusCode = 500;
-    
-    if (error.message.includes('Invalid login') || error.message.includes('Authentication') || error.message.includes('Unauthorized')) {
-      errorMessage = 'E-Mail Server Authentifizierung fehlgeschlagen. Bitte prüfe die Gmail-Einstellungen.';
-      statusCode = 401;
-    } else if (error.message.includes('ECONNREFUSED') || error.message.includes('ETIMEDOUT')) {
-      errorMessage = 'Verbindung zum E-Mail Server fehlgeschlagen. Bitte später erneut versuchen.';
-      statusCode = 503;
-    } else if (error.message.includes('recipients')) {
-      errorMessage = 'Ungültige E-Mail-Adresse. Bitte prüfe deine Eingabe.';
-      statusCode = 400;
+    // FALLBACK: Anfrage in Datei speichern wenn E-Mail nicht geht
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      
+      const contactRequest = {
+        id: Date.now(),
+        timestamp: new Date().toISOString(),
+        name,
+        email,
+        phone: phone || '',
+        service: service || '',
+        message,
+        emailError: error.message,
+        status: 'pending'
+      };
+      
+      const dataDir = path.join(__dirname, 'data');
+      if (!fs.existsSync(dataDir)) {
+        fs.mkdirSync(dataDir, { recursive: true });
+      }
+      
+      const filePath = path.join(dataDir, 'contact-requests.json');
+      let requests = [];
+      
+      if (fs.existsSync(filePath)) {
+        const content = fs.readFileSync(filePath, 'utf8');
+        requests = JSON.parse(content);
+      }
+      
+      requests.push(contactRequest);
+      fs.writeFileSync(filePath, JSON.stringify(requests, null, 2));
+      
+      console.log('✅ Anfrage gespeichert (E-Mail fehlgeschlagen):', filePath);
+      
+      // Trotzdem Erfolg an User zurückgeben - wir haben die Daten!
+      res.status(200).json({
+        success: true,
+        message: 'Anfrage erfolgreich gespeichert. Ich werde mich bei dir melden!',
+        saved: true,
+        emailError: true
+      });
+      
+    } catch (saveError) {
+      console.error('❌ Auch Speichern fehlgeschlagen:', saveError);
+      res.status(500).json({
+        success: false,
+        error: 'Technischer Fehler. Bitte schreibe mir direkt an mika@mika-stratmann.de'
+      });
     }
-    
-    res.status(statusCode).json({
-      success: false,
-      error: errorMessage,
-      details: error.message
-    });
   }
 });
 
