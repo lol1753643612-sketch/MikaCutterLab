@@ -48,7 +48,16 @@ app.post('/contact', async (req, res) => {
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
-        error: 'Name, E-Mail und Nachricht sind erforderlich'
+        error: 'Bitte fülle alle Pflichtfelder aus.'
+      });
+    }
+
+    // Prüfen ob E-Mail Config vorhanden
+    if (!emailPass) {
+      console.error('ERROR: GMAIL_APP_PASS nicht gesetzt!');
+      return res.status(500).json({
+        success: false,
+        error: 'E-Mail Konfiguration fehlt. Bitte Admin kontaktieren.'
       });
     }
 
