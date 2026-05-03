@@ -18,8 +18,9 @@ cp .env.example .env
 Bearbeite die `.env` Datei und füge dein Gmail App-Passwort ein:
 
 ```env
-EMAIL_USER=mika@mika-stratmann.de
-EMAIL_PASS=dein_gmail_app_passwort
+GMAIL_USER=mikastratmann22@gmail.com
+GMAIL_APP_PASS=dein_google_app_passwort
+TO_EMAIL=mika@mika-stratmann.de
 ```
 
 **Wichtig: Gmail App-Passwort erstellen**
@@ -41,7 +42,7 @@ npm run dev
 npm start
 ```
 
-Der Server läuft auf Port 3001: http://localhost:3001
+Der Server läuft auf Port 3001 (lokal) oder automatisch auf Render
 
 ## API Endpoints
 
@@ -88,19 +89,24 @@ Health Check Endpoint.
 
 ## Frontend Integration
 
-Das Frontend ist bereits konfiguriert und sendet Anfragen an `http://localhost:3001/contact`.
+Das Frontend erkennt automatisch die richtige API URL:
+- Lokal: `http://localhost:3013`
+- Render: `https://mikacutterlab-api.onrender.com`
 
-Stelle sicher, dass:
-1. Das Backend läuft (`npm run dev` im backend Ordner)
-2. Das Frontend läuft (`npm run dev` im Hauptordner)
-3. Beide auf den richtigen Ports laufen
+**Lokale Entwicklung:**
+1. Backend: `npm run dev` im backend Ordner (Port 3013)
+2. Frontend: `npm run dev` im Hauptordner (Port 5173)
+
+**Render Deploy:**
+- Frontend: `https://mikacutterlab.onrender.com`
+- Backend: `https://mikacutterlab-api.onrender.com`
 
 ## Fehlerbehebung
 
 ### "Es gab ein Problem beim Senden"
-- Prüfe ob das Backend läuft: `http://localhost:3001/health`
+- Prüfe Backend Health: `https://mikacutterlab-api.onrender.com/health`
+- Prüfe Environment Variables auf Render (GMAIL_APP_PASS muss gesetzt sein)
 - Prüfe die Konsole des Backends auf Fehler
-- Stelle sicher, dass das EMAIL_PASS korrekt ist
 
 ### Gmail Blockiert
 - Aktiviere "Weniger sichere Apps" in Gmail NICHT mehr nötig mit App-Passwort
@@ -108,5 +114,5 @@ Stelle sicher, dass:
 - Prüfe Spam-Ordner
 
 ### CORS Fehler
-- Das Backend erlaubt bereits Anfragen von `localhost:5173`
-- Falls du einen anderen Port verwendest, passe `server.js` an
+- Das Backend erlaubt alle Origins via CORS
+- Bei Render: Stelle sicher, dass beide Services deployed sind
